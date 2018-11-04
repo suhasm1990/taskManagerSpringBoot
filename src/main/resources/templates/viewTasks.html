@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Tasks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="col-md-12">
+        <div>
+            <form class="form-horizontal" action="/viewTasks">
+                <fieldset>
+                    <legend class="text-center header">
+                        View Task &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/">Back</a>
+                    </legend>
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Filter By Project</b></span>
+                        <div class="col-md-4">
+                            <select class="form-control" name="projectDropDown" id="projectDropDown"
+                                    onchange="this.form.submit()">
+                                <option value="">All Projects</option>
+                                <span th:each="project : ${projectsDropDownValue}">
+                                    <span th:if="${project.projectId == selectedValue}">
+                                        <option th:value="${project.projectId}" th:text="${project.projectName}"
+                                                th:selected="${selectedValue}"/>
+                                        <span th:if="${project.projectId != selectedValue}">
+                                        <option th:value="${project.projectId}" th:text="${project.projectName}"/>
+                                    </span>
+                                    </span>
+                                    <span th:unless="${project.projectId == selectedValue}">
+                                        <option th:value="${project.projectId}" th:text="${project.projectName}"/>
+                                    </span>
+                                </span>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div th:each="project : ${projects}">
+                        <div th:if="${not #lists.isEmpty(project.taskList)}">
+                            <div class="form-group">
+                                <span class="col-md-4 text-center"><b>Project:</b></span>
+                                <div class="col-md-8">
+                                    <b><span th:text="${project.projectName}"></span></b>
+                                </div>
+                            </div>
+
+                            <div th:each="task : ${project.taskList}">
+                                <div class="form-group">
+                                    <span class="col-md-4 text-center"><b>Task Description:</b></span>
+                                    <div class="col-md-8">
+                                        <span th:text="${task.taskDescription}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-md-4 text-center"><b>Task Start Date:</b></span>
+                                    <div class="col-md-8">
+                                        <span th:text="${#dates.format(task.taskStartDate, 'dd-MM-yyyy')}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-md-4 text-center"><b>Task End Date:</b></span>
+                                    <div class="col-md-8">
+                                        <span th:text="${#dates.format(task.taskEndDate, 'dd-MM-yyyy')}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group center">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>MID</th>
+                                                <th>Employee Name</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="employee : ${task.employeeList}">
+                                                <td th:text="${employee.mId}"></td>
+                                                <td th:text="${employee.employeeName}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="form-group center">
+                        <div class="col-md-4"></div>
+                        <a href="/newTask">Click here</a> to add new task
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

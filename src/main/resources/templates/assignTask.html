@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Tasks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="col-md-12">
+        <div>
+            <form class="form-horizontal" action="/assignTask" method="post">
+                <fieldset>
+                    <legend class="text-center header">Assign Task</legend>
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Project *</b></span>
+                        <div class="col-md-4">
+                            <select class="form-control" name="projectDropDown" required>
+                                <option value="">Select a Project</option>
+                                <option th:each="project : ${projects}" th:value="${project.projectId}"
+                                        th:text="${project.projectName}"/>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Task Description *</b></span>
+                        <div class="col-md-4">
+                            <input name="taskDescription" type="text" placeholder="Enter Task Description"
+                                   class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Start Date of Task *</b></span>
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" name="taskStartDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Due Date of task *</b></span>
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" name="taskDueDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-md-4 text-center"><b>Who should do this? *</b></span>
+                        <div class="col-md-4">
+                            <select multiple class="form-control" name="empList" required>
+                                <option th:each="employee : ${employees}" th:value="${employee.mId}"
+                                        th:text="${employee.employeeName +'  '+employee.mId}"/>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-md">Assign a Task</button>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-md" onclick="location.href='/'">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
